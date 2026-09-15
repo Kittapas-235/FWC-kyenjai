@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.parallax {
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg1 {
+    background-image: url('https://images2.alphacoders.com/595/595171.jpg');
+}
+
+.bg2 {
+    background-image: url('https://wallpaperaccess.com/full/9000936.jpg');
+}
+
+.caption span {
+    background-color: rgba(68, 68, 68, 0.7);
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    border-radius: 4px;
+}
+
+.block {
+    background-color: #000;
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.block h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.block p {
+    font-size: 16px;
+    color: #bbb;
+}
