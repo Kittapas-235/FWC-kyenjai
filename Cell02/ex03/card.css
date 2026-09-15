@@ -1,0 +1,46 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    padding-top: 40px;
+}
+
+#card {
+    background: white;
+    border: 1px solid #ccc;
+    width: 250px;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px;
+}
+
+td img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.social-icons img {
+    width: 20px;
+    height: 20px;
+    margin: 0 4px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+button:hover{
+    background-color: #0166d3;
+}
