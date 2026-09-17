@@ -1,63 +1,55 @@
 const ftList = document.getElementById("ft_list");
 const newBtn = document.getElementById("new_btn");
 
-// ฟังก์ชันเซฟรายการทั้งหมดลง Cookie
-function saveToCookie() {
-    const todos = [];
-    const items = ftList.querySelectorAll("div");
-    items.forEach(item => {
-        todos.push(item.textContent);
-    });
+//สร้างกล่องข้อความ TO DO
+function createTodo(text) {
+    const item = document.createElement("div");
+    item.textContent = text;
 
-    const d = new Date();
-    d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
-    document.cookie = "todos=" + encodeURIComponent(JSON.stringify(todos)) + ";expires=" + d.toUTCString() + ";path=/";
-}
-
-function loadFromCookie() {
-    const cookies = document.cookie.split(";");
-    for (let c of cookies) {
-        c = c.trim();
-        if (c.startsWith("todos=")) {
-            const raw = c.substring("todos=".length);
-            try {
-                const todos = JSON.parse(decodeURIComponent(raw));
-                for (let i = todos.length - 1; i >= 0; i--) {
-                    addTodo(todos[i], false);
-                }
-            } catch (e) {
-                console.error(e);
-            }
-            break;
-        }
-    }
-}
-
-// สร้างกล่องข้อความ TO DO
-function addTodo(text, save = true) {
-    const todoDiv = document.createElement("div");
-    todoDiv.textContent = text;
-
-    todoDiv.addEventListener("click", () => {
+    item.addEventListener("click", () => {
         if (confirm("Do you really want to delete this TO DO?")) {
-            todoDiv.remove();
-            saveToCookie();
+            item.remove();
+            saveList();
         }
     });
 
-    ftList.prepend(todoDiv);
+    ftList.prepend(item);
+}
 
-    if (save) {
-        saveToCookie();
+//เซฟข้อความทั้งหมดลง Cookie
+function saveList() {
+    const list = [];
+    const items = ftList.querySelectorAll("div");
+
+    items.forEach(div => {
+        list.push(div.textContent);
+    });
+
+    document.cookie = "todos=" + encodeURIComponent(JSON.stringify(list)) + ";path=/;max-age=604800";
+}
+
+//ดึงข้อมูลจาก Cookie ตอนเปิดหน้าเว็บ
+function loadList() {
+    const allCookies = document.cookie.split("; ");
+    const todoCookie = allCookies.find(row => row.startsWith("todos="));
+
+    if (!todoCookie) return;
+
+    const jsonString = decodeURIComponent(todoCookie.replace("todos=", ""));
+    const list = JSON.parse(jsonString);
+
+    for (let i = list.length - 1; i >= 0; i--) {
+        createTodo(list[i]);
     }
 }
 
-// คลิกปุ่ม New
+//กดปุ่ม New
 newBtn.addEventListener("click", () => {
     const text = prompt("Enter a new TO DO:");
-    if (text !== null && text.trim() !== "") {
-        addTodo(text.trim());
+    if (text && text.trim() !== "") {
+        createTodo(text.trim());
+        saveList();
     }
 });
 
-window.addEventListener("load", loadFromCookie);
+window.addEventListener("load", loadList);
